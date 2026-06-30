@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animeci18 - Premium Anime Streaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0a0a0a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --accent: #ff9900;
+            --accent-hover: #e68a00;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --glass: rgba(20, 20, 20, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- UI Components --- */
+        .glass-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-tools {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .lang-toggle, .admin-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .lang-toggle:hover, .admin-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(to bottom, transparent, var(--bg-body)), 
+                        url('https://images.unsplash.com/photo-1578632738981-4330694f4ed3?q=80&w=2070') center/cover;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 5% 10vh;
+        }
+
+        .hero-content { max-width: 600px; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero-content p { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; }
+
+        .play-btn {
+            background: var(--accent);
+            color: #000;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- Grid --- */
+        .container { padding: 3rem 5%; }
+        .section-title { font-size: 1.8rem; margin-bottom: 2rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .thumbnail { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .card-info { padding: 1rem; }
+        .card-info h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .card-info .tag { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; }
+
+        /* --- Age Gate --- */
+        #ageGate {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .gate-content {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            max-width: 500px;
+        }
+
+        .gate-content h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .gate-btns { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; }
+        .btn-yes { background: var(--accent); color: #000; padding: 0.8rem 2.5rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .btn-no { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); padding: 0.8rem 2.5rem; border-radius: 4px; cursor: pointer; }
+
+        /* --- Player Modal --- */
+        #playerModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .player-container {
+            width: 90%;
+            max-width: 1000px;
+            background: #111;
+            padding: 1rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-player {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* --- Mobile --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .section-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Age Gate -->
+    <div id="ageGate">
+        <div class="gate-content">
+            <div id="gateText">
+                <h2 data-tr="18 Yaşından Büyük Müsünüz?" data-en="Are you over 18?">18 Yaşından Büyük Müsünüz?</h2>
+                <p data-tr="Bu site yetişkin içerik barındırmaktadır." data-en="This site contains adult content.">Bu site yetişkin içerik barındırmaktadır.</p>
+            </div>
+            <div class="gate-btns">
+                <button class="btn-yes" onclick="verifyAge()" data-tr="Evet" data-en="Yes">Evet</button>
+                <button class="btn-no" onclick="window.location.href='https://google.com'" data-tr="Hayır" data-en="No">Hayır</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="glass-header">
+        <div class="logo">Animeci18</div>
+        <div class="nav-tools">
+            <button class="lang-toggle" onclick="toggleLang()">TR / EN</button>
+            <button class="admin-btn" onclick="openAdmin()" data-tr="Admin Paneli" data-en="Admin Panel">Admin Paneli</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 data-tr="Efsanevi Hikayeler" data-en="Legendary Stories">Efsanevi Hikayeler</h1>
+            <p data-tr="En popüler anime serileri ve özel içerikler burada." data-en="Most popular anime series and exclusive content here.">En popüler anime serileri ve özel içerikler burada.</p>
+            <button class="play-btn" onclick="playFeatured()" data-tr="Şimdi İzle" data-en="Watch Now">Şimdi İzle</button>
+        </div>
+    </section>
+
+    <main class="container">
+        <h2 class="section-title" data-tr="Keşfet" data-en="Discover">Keşfet</h2>
+        <div class="video-grid" id="videoGrid">
+            <!-- Videos inject here -->
+        </div>
+    </main>
+
+    <!-- Player Modal -->
+    <div id="playerModal">
+        <div class="player-container">
+            <span class="close-player" onclick="closePlayer()">&times;</span>
+            <div id="playerWrapper"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = localStorage.getItem('lang') || 'tr';
+        
+        const videos = JSON.parse(localStorage.getItem('animeVideos')) || [
+            { id: 1, title: "Demon Slayer", category: "Action", thumb: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=2070", url: "https://www.youtube.com/embed/VQGCKyvzIM4" },
+            { id: 2, title: "Attack on Titan", category: "Drama", thumb: "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=1974", url: "https://www.youtube.com/embed/MGRm4IzK1SQ" }
+        ];
+
+        function init() {
+            if (localStorage.getItem('ageVerified')) document.getElementById('ageGate').style.display = 'none';
+            renderGrid();
+            updateLangUI();
+        }
+
+        function verifyAge() {
+            localStorage.setItem('ageVerified', 'true');
+            document.getElementById('ageGate').style.display = 'none';
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('videoGrid');
+            grid.innerHTML = videos.map(v => `
+                <div class="video-card" onclick="playVideo('${v.url}')">
+                    <img src="${v.thumb}" class="thumbnail">
+                    <div class="card-info">
+                        <span class="tag">${v.category}</span>
+                        <h3>${v.title}</h3>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'tr' ? 'en' : 'tr';
+            localStorage.setItem('lang', currentLang);
+            updateLangUI();
+        }
+
+        function updateLangUI() {
+            document.querySelectorAll('[data-' + currentLang + ']').forEach(el => {
+                el.innerText = el.getAttribute('data-' + currentLang);
+            });
+        }
+
+        function playVideo(url) {
+            const wrapper = document.getElementById('playerWrapper');
+            if (url.includes('youtube')) {
+                wrapper.innerHTML = `<iframe width="100%" height="500" src="${url}" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                wrapper.innerHTML = `<video controls width="100%"><source src="${url}" type="video/mp4"></video>`;
+            }
+            document.getElementById('playerModal').style.display = 'flex';
+        }
+
+        function closePlayer() {
+            document.getElementById('playerModal').style.display = 'none';
+            document.getElementById('playerWrapper').innerHTML = '';
+        }
+
+        function openAdmin() {
+            const pass = prompt(currentLang === 'tr' ? "Şifre girin:" : "Enter password:");
+            if (pass === 'Veysel123') {
+                alert(currentLang === 'tr' ? "Admin paneline hoş geldiniz. (Simüle edildi)" : "Welcome to Admin Panel. (Simulated)");
+                // Implementation for add/delete logic would go here
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
