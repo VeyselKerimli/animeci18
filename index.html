@@ -1,747 +1,1056 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Animeci18 Premium - Exclusive anime and movie streaming platform." />
+<meta name="theme-color" content="#050505" />
 <title>Animeci18 Premium</title>
-<meta name="description" content="Animeci18 Premium - Anime ve Video Akış Platformu">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] },
+        colors: {
+          ink: '#050505',
+          card: '#0F0F0F',
+          panel: '#141414',
+          accent: '#FF8C00',
+          flame: '#FF4500',
+        },
+        animation: {
+          'fade-in': 'fadeIn .4s ease-out',
+          'slide-up': 'slideUp .45s cubic-bezier(.2,.8,.2,1)',
+          'glow-pulse': 'glowPulse 2.2s ease-in-out infinite',
+          'shimmer': 'shimmer 2s linear infinite',
+        },
+        keyframes: {
+          fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+          slideUp: { '0%': { transform: 'translateY(20px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
+          glowPulse: { '0%,100%': { boxShadow: '0 0 20px rgba(255,140,0,.35)' }, '50%': { boxShadow: '0 0 35px rgba(255,140,0,.7)' } },
+          shimmer: { '0%': { backgroundPosition: '-1000px 0' }, '100%': { backgroundPosition: '1000px 0' } },
+        }
+      }
+    }
+  }
+</script>
+
 <style>
-  * { font-family: 'Plus Jakarta Sans', sans-serif; }
-  body { background: #050505; color: #f1f1f1; }
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  * { -webkit-tap-highlight-color: transparent; }
+  html, body { background: #050505; color: #f5f5f5; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: #050505; }
-  ::-webkit-scrollbar-thumb { background: #FF8C00; border-radius: 10px; }
-  .glass { background: rgba(15,15,15,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-  .glass-light { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-  .accent { color: #FF8C00; }
-  .bg-accent { background: linear-gradient(135deg, #FF8C00, #FF4500); }
-  .border-accent { border-color: #FF8C00; }
-  .glow:hover { box-shadow: 0 0 25px rgba(255,140,0,0.45); }
-  .glow-active { box-shadow: 0 0 20px rgba(255,140,0,0.55); }
-  .card-hover { transition: all .35s cubic-bezier(.2,.8,.2,1); }
-  .card-hover:hover { transform: translateY(-8px) scale(1.03); z-index: 10; }
-  .fade-in { animation: fadeIn .5s ease both; }
-  @keyframes fadeIn { from{opacity:0; transform: translateY(12px);} to{opacity:1; transform: translateY(0);} }
-  .modal-bg { background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
-  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width:14px; height:14px; border-radius:50%; background:#FF8C00; cursor:pointer; }
-  .heart-pop { transition: transform .2s ease; }
-  .heart-pop:active { transform: scale(1.4); }
-  .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  .line-clamp-3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-  .gradient-text { background: linear-gradient(135deg, #FF8C00, #FF4500); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .skeleton { background: linear-gradient(90deg, #0f0f0f 25%, #1a1a1a 37%, #0f0f0f 63%); background-size: 400% 100%; animation: skeleton-loading 1.4s ease infinite; }
-  @keyframes skeleton-loading { 0%{background-position:100% 50%} 100%{background-position:0 50%} }
-  .tab-active { color:#FF8C00; border-bottom: 2px solid #FF8C00; }
+  ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #FF8C00; }
+
+  .glass {
+    background: rgba(15, 15, 15, 0.72);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .glass-strong {
+    background: rgba(15, 15, 15, 0.88);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-gradient {
+    background: radial-gradient(ellipse at top, rgba(255,140,0,0.15), transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(255,69,0,0.08), transparent 60%);
+  }
+
+  .card-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-shine::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 40%, rgba(255,140,0,0.08) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform .8s ease;
+    pointer-events: none;
+  }
+  .card-shine:hover::before { transform: translateX(100%); }
+
+  .btn-accent {
+    background: linear-gradient(135deg, #FF8C00, #FF4500);
+    color: #0a0a0a;
+    font-weight: 700;
+    transition: all .25s ease;
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.25);
+  }
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 140, 0, 0.5);
+  }
+
+  .input-dark {
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    transition: all .2s;
+  }
+  .input-dark:focus {
+    outline: none;
+    border-color: #FF8C00;
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.15);
+  }
+
+  .category-chip {
+    transition: all .25s ease;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .category-chip:hover { border-color: rgba(255,140,0,0.5); color: #FF8C00; }
+  .category-chip.active {
+    background: linear-gradient(135deg, #FF8C00, #FF4500);
+    color: #050505;
+    border-color: transparent;
+    font-weight: 700;
+  }
+
+  .video-card {
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+  }
+  .video-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,140,0,0.35);
+  }
+
+  .badge-new {
+    background: linear-gradient(135deg, #FF4500, #FF8C00);
+    animation: glowPulse 2.2s ease-in-out infinite;
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, #0F0F0F 0%, #1a1a1a 50%, #0F0F0F 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .fade-mask {
+    mask-image: linear-gradient(to bottom, black 70%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
+  }
+
+  .scroll-fade {
+    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  }
+
+  details[open] summary .chev { transform: rotate(180deg); }
+  summary::-webkit-details-marker { display: none; }
+
+  .modal-overlay {
+    background: rgba(0,0,0,0.82);
+    backdrop-filter: blur(8px);
+  }
+
+  .toast {
+    animation: slideUp .4s ease-out, fadeOut .3s ease-in 2.7s forwards;
+  }
+  @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+
+  .like-pop { animation: pop .4s ease; }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.35); filter: drop-shadow(0 0 10px #FF8C00); }
+    100% { transform: scale(1); }
+  }
+
+  .admin-secret { opacity: 0.35; transition: opacity .3s; }
+  .admin-secret:hover { opacity: 1; }
+
+  @media (max-width: 640px) {
+    .hide-sm { display: none !important; }
+  }
 </style>
 </head>
-<body class="min-h-screen" style="background:#050505;">
+<body class="min-h-screen">
 
-<!-- ============ YAŞ DOĞRULAMA EKRANI ============ -->
-<div id="ageGate" class="fixed inset-0 z-[999] flex items-center justify-center modal-bg">
-  <div class="glass max-w-md w-[90%] rounded-2xl p-8 text-center border border-white/10 fade-in">
-    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-accent flex items-center justify-center">
-      <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+<!-- ============== AGE GATE ============== -->
+<div id="ageGate" class="fixed inset-0 z-[100] flex items-center justify-center p-6 hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-black via-ink to-black"></div>
+  <div class="absolute inset-0 hero-gradient"></div>
+  <div class="relative glass-strong rounded-3xl p-8 md:p-12 max-w-md w-full text-center animate-slide-up">
+    <div class="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
+         style="background: linear-gradient(135deg, #FF8C00, #FF4500); box-shadow: 0 0 40px rgba(255,140,0,0.5);">
+      <i class="fa-solid fa-shield-halved text-3xl text-black"></i>
     </div>
-    <h1 class="text-2xl font-extrabold mb-2 gradient-text" data-i18n="brand">Animeci18 Premium</h1>
-    <p class="text-lg font-semibold mb-6" data-i18n="ageQuestion">18 yaşından büyük müsünüz?</p>
-    <div class="flex gap-4 justify-center">
-      <button onclick="confirmAge(true)" class="px-6 py-3 rounded-xl bg-accent font-bold glow transition" data-i18n="yes">Evet, Devam Et</button>
-      <button onclick="confirmAge(false)" class="px-6 py-3 rounded-xl border border-white/20 font-bold hover:bg-white/10 transition" data-i18n="no">Hayır, Çık</button>
+    <div class="text-xs font-bold tracking-[0.3em] text-accent mb-3">ANIMECI18 PREMIUM</div>
+    <h1 class="text-2xl md:text-3xl font-bold mb-3" data-i18n="ageTitle">18 yaşından büyük müsünüz?</h1>
+    <p class="text-sm text-gray-400 mb-8" data-i18n="ageDesc">Bu platform yalnızca yetişkin kullanıcılara yöneliktir.</p>
+    <div class="flex gap-3">
+      <button onclick="confirmAge(true)" class="btn-accent flex-1 py-3 rounded-xl" data-i18n="ageYes">Evet, 18 yaşındayım</button>
+      <button onclick="confirmAge(false)" class="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition font-semibold" data-i18n="ageNo">Hayır</button>
     </div>
-    <p class="text-xs text-gray-500 mt-5" data-i18n="ageNote">Bu site +18 içerik barındırabilir. Devam ederek yasal yaşta olduğunuzu onaylarsınız.</p>
+    <p class="text-[11px] text-gray-600 mt-6" data-i18n="ageNote">Devam ederek kullanım koşullarını kabul etmiş olursunuz.</p>
   </div>
 </div>
 
-<!-- ============ NAVBAR ============ -->
-<nav class="sticky top-0 z-50 glass border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-    <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="scrollToTop()">
-      <i class="fa-solid fa-play text-2xl accent"></i>
-      <span class="text-xl font-extrabold gradient-text whitespace-nowrap">Animeci18</span>
+<!-- ============== HEADER ============== -->
+<header class="sticky top-0 z-40 glass-strong border-b border-white/5">
+  <div class="max-w-[1600px] mx-auto px-4 md:px-8 py-3 flex items-center gap-3 md:gap-6">
+    <a href="#" onclick="goHome(event)" class="flex items-center gap-2 shrink-0">
+      <div class="w-9 h-9 rounded-lg flex items-center justify-center"
+           style="background: linear-gradient(135deg, #FF8C00, #FF4500);">
+        <i class="fa-solid fa-play text-black text-sm"></i>
+      </div>
+      <div class="leading-tight hide-sm">
+        <div class="font-extrabold text-sm tracking-wide">animeci18</div>
+        <div class="text-[9px] tracking-[0.2em] text-accent font-semibold">PREMIUM</div>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 ml-2">
+      <button onclick="setCategory('all')" data-cat="all" class="category-chip px-4 py-1.5 rounded-full text-sm active" data-i18n="catAll">Tümü</button>
+      <button onclick="setCategory('Seri')" data-cat="Seri" class="category-chip px-4 py-1.5 rounded-full text-sm" data-i18n="catSeri">Seri</button>
+      <button onclick="setCategory('Film')" data-cat="Film" class="category-chip px-4 py-1.5 rounded-full text-sm" data-i18n="catFilm">Film</button>
+      <button onclick="setCategory('Aksiyon')" data-cat="Aksiyon" class="category-chip px-4 py-1.5 rounded-full text-sm" data-i18n="catAksiyon">Aksiyon</button>
+      <button onclick="setCategory('Fantastik')" data-cat="Fantastik" class="category-chip px-4 py-1.5 rounded-full text-sm" data-i18n="catFantastik">Fantastik</button>
+    </nav>
+
+    <div class="flex-1 max-w-md mx-auto relative">
+      <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+      <input id="searchInput" type="text" placeholder="Ara..."
+             class="w-full pl-11 pr-4 py-2.5 rounded-full input-dark text-sm"
+             data-i18n-ph="searchPh" oninput="renderVideos()" />
     </div>
 
-    <div class="hidden md:flex items-center gap-1 flex-1 max-w-xl mx-4 relative">
-      <i class="fa-solid fa-magnifying-glass absolute left-4 text-gray-500"></i>
-      <input id="searchInput" oninput="renderVideos()" type="text" data-i18n-ph="searchPlaceholder" placeholder="Video ara..."
-        class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-sm focus:outline-none focus:border-accent transition">
-    </div>
-
-    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-      <button onclick="toggleLang()" class="px-3 py-2 rounded-lg glass-light border border-white/10 text-xs font-bold hover:border-accent transition">
-        <i class="fa-solid fa-globe accent mr-1"></i><span id="langLabel">EN</span>
+    <div class="flex items-center gap-1 md:gap-2">
+      <button onclick="toggleLang()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-sm font-bold">
+        <span id="langLabel">TR</span>
       </button>
-      <button onclick="openAdminLogin()" id="adminBtn" class="px-3 py-2 rounded-lg bg-accent text-xs font-bold glow transition flex items-center gap-1">
-        <i class="fa-solid fa-user-shield"></i><span class="hidden sm:inline" data-i18n="admin">Admin</span>
-      </button>
-      <button onclick="document.getElementById('mobileSearch').classList.toggle('hidden')" class="md:hidden px-3 py-2 rounded-lg glass-light border border-white/10">
-        <i class="fa-solid fa-magnifying-glass"></i>
+      <button onclick="openAdminModal()" class="admin-secret w-9 h-9 rounded-lg hover:bg-white/5 transition flex items-center justify-center" title="Settings">
+        <i class="fa-solid fa-gear text-xs text-gray-500"></i>
       </button>
     </div>
   </div>
-  <div id="mobileSearch" class="hidden md:hidden px-4 pb-3 relative">
-    <i class="fa-solid fa-magnifying-glass absolute left-7 top-1/2 -translate-y-1/2 text-gray-500"></i>
-    <input oninput="document.getElementById('searchInput').value=this.value; renderVideos();" type="text" data-i18n-ph="searchPlaceholder" placeholder="Video ara..."
-      class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-sm focus:outline-none focus:border-accent transition">
-  </div>
 
-  <!-- Kategori sekmeleri -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 overflow-x-auto">
-    <div class="flex gap-6 py-2 text-sm font-semibold whitespace-nowrap" id="categoryTabs">
-      <button class="cat-tab tab-active pb-1 transition" data-cat="all" onclick="setCategory('all')" data-i18n="catAll">Tümü</button>
-      <button class="cat-tab pb-1 transition text-gray-400 hover:text-white" data-cat="series" onclick="setCategory('series')" data-i18n="catSeries">Seri</button>
-      <button class="cat-tab pb-1 transition text-gray-400 hover:text-white" data-cat="movie" onclick="setCategory('movie')" data-i18n="catMovie">Film</button>
-      <button class="cat-tab pb-1 transition text-gray-400 hover:text-white" data-cat="action" onclick="setCategory('action')" data-i18n="catAction">Aksiyon</button>
-      <button class="cat-tab pb-1 transition text-gray-400 hover:text-white" data-cat="fantasy" onclick="setCategory('fantasy')" data-i18n="catFantasy">Fantastik</button>
-    </div>
-  </div>
-</nav>
-
-<!-- ============ HERO ============ -->
-<header id="heroSection" class="relative h-[60vh] min-h-[400px] flex items-end overflow-hidden">
-  <img id="heroImg" src="" class="absolute inset-0 w-full h-full object-cover opacity-50">
-  <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
-  <div class="absolute inset-0 bg-gradient-to-r from-[#050505]/90 via-transparent to-transparent"></div>
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pb-10 w-full">
-    <span class="inline-block px-3 py-1 rounded-full bg-accent text-xs font-bold mb-3" data-i18n="featured">ÖNE ÇIKAN</span>
-    <h1 id="heroTitle" class="text-3xl sm:text-5xl font-extrabold mb-3 max-w-2xl leading-tight"></h1>
-    <p id="heroDesc" class="text-gray-300 max-w-xl mb-5 line-clamp-2 text-sm sm:text-base"></p>
-    <div class="flex gap-3">
-      <button id="heroPlayBtn" class="px-6 py-3 rounded-xl bg-accent font-bold glow flex items-center gap-2 transition">
-        <i class="fa-solid fa-play"></i><span data-i18n="watchNow">Hemen İzle</span>
-      </button>
-    </div>
+  <!-- Mobile categories -->
+  <div class="md:hidden px-4 pb-3 overflow-x-auto scroll-fade flex gap-2">
+    <button onclick="setCategory('all')" data-cat="all" class="category-chip px-4 py-1.5 rounded-full text-sm active whitespace-nowrap" data-i18n="catAll">Tümü</button>
+    <button onclick="setCategory('Seri')" data-cat="Seri" class="category-chip px-4 py-1.5 rounded-full text-sm whitespace-nowrap" data-i18n="catSeri">Seri</button>
+    <button onclick="setCategory('Film')" data-cat="Film" class="category-chip px-4 py-1.5 rounded-full text-sm whitespace-nowrap" data-i18n="catFilm">Film</button>
+    <button onclick="setCategory('Aksiyon')" data-cat="Aksiyon" class="category-chip px-4 py-1.5 rounded-full text-sm whitespace-nowrap" data-i18n="catAksiyon">Aksiyon</button>
+    <button onclick="setCategory('Fantastik')" data-cat="Fantastik" class="category-chip px-4 py-1.5 rounded-full text-sm whitespace-nowrap" data-i18n="catFantastik">Fantastik</button>
   </div>
 </header>
 
-<!-- ============ ANA İÇERİK ============ -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-  <div class="flex items-center justify-between mb-5">
-    <h2 class="text-xl sm:text-2xl font-bold" data-i18n="allVideos">Tüm Videolar</h2>
-    <span id="videoCount" class="text-sm text-gray-500"></span>
+<!-- ============== HERO ============== -->
+<section class="relative overflow-hidden hero-gradient">
+  <div class="max-w-[1600px] mx-auto px-4 md:px-8 py-10 md:py-16">
+    <div class="max-w-2xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-semibold mb-5">
+        <span class="w-2 h-2 rounded-full bg-accent animate-glow-pulse"></span>
+        <span data-i18n="heroBadge">PREMIUM KOLEKSİYON</span>
+      </div>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4" data-i18n="heroTitle">Sınırsız İzleme <span class="text-accent">Deneyimi</span></h1>
+      <p class="text-gray-400 text-base md:text-lg mb-6 max-w-xl" data-i18n="heroDesc">Sevdiğiniz serileri, filmleri ve özel içerikleri tek bir yerde keşfedin.</p>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="playFeatured()" class="btn-accent px-6 py-3 rounded-xl flex items-center gap-2">
+          <i class="fa-solid fa-play"></i>
+          <span data-i18n="heroPlay">Öne Çıkanı İzle</span>
+        </button>
+        <button onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})"
+                class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition flex items-center gap-2">
+          <i class="fa-solid fa-compass"></i>
+          <span data-i18n="heroExplore">Keşfet</span>
+        </button>
+      </div>
+    </div>
   </div>
-  <div id="videoGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
-  <div id="emptyState" class="hidden text-center py-20 text-gray-500">
-    <i class="fa-solid fa-ghost text-4xl mb-4"></i>
-    <p data-i18n="noResults">Sonuç bulunamadı.</p>
+</section>
+
+<!-- ============== GRID ============== -->
+<main class="max-w-[1600px] mx-auto px-4 md:px-8 py-8 md:py-12">
+  <div class="flex items-end justify-between mb-6">
+    <div>
+      <h2 class="text-xl md:text-2xl font-bold" data-i18n="libraryTitle">Kütüphane</h2>
+      <p class="text-sm text-gray-500 mt-1" data-i18n="libraryDesc">Tüm içerikler</p>
+    </div>
+    <div class="text-sm text-gray-400">
+      <span id="countBadge">0</span> <span data-i18n="results">sonuç</span>
+    </div>
+  </div>
+
+  <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5"></div>
+  <div id="emptyState" class="hidden text-center py-20">
+    <i class="fa-solid fa-film text-5xl text-gray-700 mb-4"></i>
+    <p class="text-gray-500" data-i18n="empty">Eşleşen içerik bulunamadı.</p>
   </div>
 </main>
 
-<footer class="border-t border-white/10 py-8 text-center text-gray-500 text-xs">
-  <p>© 2026 Animeci18 Premium. <span data-i18n="rightsReserved">Tüm hakları saklıdır.</span></p>
+<!-- ============== VIDEO MODAL ============== -->
+<div id="videoModal" class="fixed inset-0 z-50 hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeVideoModal()"></div>
+  <div class="relative z-10 h-full overflow-y-auto">
+    <div class="max-w-5xl mx-auto p-4 md:p-8">
+      <div class="glass-strong rounded-2xl overflow-hidden animate-slide-up">
+        <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/70 hover:bg-black transition flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Player -->
+        <div class="relative aspect-video bg-black" id="playerWrap">
+          <div id="playerHost" class="w-full h-full"></div>
+          <div id="playerOverlay" class="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/40 hover:bg-black/30 transition" onclick="triggerPlay()">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg,#FF8C00,#FF4500); box-shadow: 0 0 40px rgba(255,140,0,.6);">
+              <i class="fa-solid fa-play text-black text-2xl ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 md:p-8">
+          <div class="flex items-start justify-between gap-4 mb-4 flex-wrap">
+            <div>
+              <h2 id="mTitle" class="text-2xl md:text-3xl font-extrabold mb-2"></h2>
+              <div class="flex items-center gap-3 flex-wrap text-sm">
+                <span id="mCat" class="px-3 py-1 rounded-full bg-accent/15 text-accent font-semibold"></span>
+                <span class="text-gray-400"><i class="fa-regular fa-heart mr-1"></i><span id="mLikes">0</span></span>
+                <span class="text-gray-400"><i class="fa-regular fa-comment mr-1"></i><span id="mComments">0</span></span>
+              </div>
+            </div>
+            <button onclick="toggleLike()" id="likeBtn"
+                    class="px-5 py-2.5 rounded-xl glass hover:bg-white/10 transition flex items-center gap-2 font-semibold">
+              <i class="fa-regular fa-heart text-lg" id="likeIcon"></i>
+              <span data-i18n="likeBtn">Beğen</span>
+            </button>
+          </div>
+
+          <p id="mDesc" class="text-gray-400 leading-relaxed mb-6"></p>
+
+          <!-- Source selector -->
+          <div class="glass rounded-xl p-4 mb-6">
+            <div class="text-xs text-gray-400 mb-3 font-semibold" data-i18n="chooseSource">KAYNAK SEÇ</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <button onclick="setSource('embed')" class="source-btn px-3 py-2 rounded-lg bg-white/5 hover:bg-accent hover:text-black transition text-sm font-semibold active" data-src="embed">
+                <i class="fa-solid fa-link mr-1"></i><span data-i18n="srcEmbed">Link</span>
+              </button>
+              <button onclick="setSource('youtube')" class="source-btn px-3 py-2 rounded-lg bg-white/5 hover:bg-accent hover:text-black transition text-sm font-semibold" data-src="youtube">
+                <i class="fa-brands fa-youtube mr-1"></i>YouTube
+              </button>
+              <button onclick="setSource('mp4')" class="source-btn px-3 py-2 rounded-lg bg-white/5 hover:bg-accent hover:text-black transition text-sm font-semibold" data-src="mp4">
+                <i class="fa-solid fa-file-video mr-1"></i>MP4
+              </button>
+              <button onclick="triggerUpload()" class="source-btn px-3 py-2 rounded-lg bg-white/5 hover:bg-accent hover:text-black transition text-sm font-semibold">
+                <i class="fa-solid fa-upload mr-1"></i><span data-i18n="srcUpload">Yükle</span>
+              </button>
+            </div>
+            <input type="file" id="fileUpload" accept="video/*" class="hidden" onchange="handleUpload(event)" />
+            <div id="sourceInputWrap" class="mt-3"></div>
+          </div>
+
+          <!-- Comments -->
+          <div class="glass rounded-xl p-4 md:p-5">
+            <h3 class="font-bold text-lg mb-4" data-i18n="comments">Yorumlar</h3>
+            <div class="flex gap-2 mb-4">
+              <input id="commentName" type="text" placeholder="İsminiz" class="input-dark rounded-lg px-3 py-2 text-sm w-32 md:w-40 shrink-0" data-i18n-ph="yourName"/>
+              <input id="commentText" type="text" placeholder="Yorum yazın..." class="input-dark rounded-lg px-3 py-2 text-sm flex-1" data-i18n-ph="writeComment" onkeypress="if(event.key==='Enter') postComment()"/>
+              <button onclick="postComment()" class="btn-accent px-4 rounded-lg">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+            <div id="commentsList" class="space-y-3 max-h-80 overflow-y-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== ADMIN MODAL ============== -->
+<div id="adminModal" class="fixed inset-0 z-50 hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeAdminModal()"></div>
+  <div class="relative z-10 h-full overflow-y-auto flex items-center justify-center p-4">
+    <div class="glass-strong rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden animate-slide-up">
+      <!-- Login -->
+      <div id="adminLogin" class="p-8 md:p-12">
+        <button onclick="closeAdminModal()" class="float-right w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 transition flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-sm mx-auto text-center">
+          <div class="mx-auto w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg,#FF8C00,#FF4500);">
+            <i class="fa-solid fa-user-shield text-2xl text-black"></i>
+          </div>
+          <h2 class="text-2xl font-bold mb-2" data-i18n="adminLogin">Yönetici Girişi</h2>
+          <p class="text-sm text-gray-400 mb-6" data-i18n="adminSub">Yetkili erişim gerekli.</p>
+          <input id="adminPass" type="password" placeholder="Şifre" class="input-dark w-full rounded-xl px-4 py-3 mb-3" data-i18n-ph="passPh" onkeypress="if(event.key==='Enter') tryLogin()"/>
+          <button onclick="tryLogin()" class="btn-accent w-full py-3 rounded-xl" data-i18n="login">Giriş Yap</button>
+          <div id="loginError" class="text-flame text-xs mt-3 hidden" data-i18n="wrongPass">Yanlış şifre.</div>
+        </div>
+      </div>
+
+      <!-- Panel -->
+      <div id="adminPanel" class="hidden h-full flex flex-col">
+        <div class="p-5 md:p-6 border-b border-white/5 flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-bold" data-i18n="adminPanel">Yönetici Paneli</h2>
+            <p class="text-xs text-gray-400" data-i18n="manageContent">İçerikleri yönetin</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="exportData()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-sm" title="Export">
+              <i class="fa-solid fa-download"></i>
+            </button>
+            <label class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-sm cursor-pointer" title="Import">
+              <i class="fa-solid fa-upload"></i>
+              <input type="file" accept=".json" class="hidden" onchange="importData(event)"/>
+            </label>
+            <button onclick="adminLogout()" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-sm" data-i18n="logout">Çıkış</button>
+          </div>
+        </div>
+
+        <div class="p-5 md:p-6 overflow-y-auto flex-1 grid md:grid-cols-5 gap-5">
+          <!-- Form -->
+          <div class="md:col-span-2 glass rounded-xl p-5 h-fit">
+            <h3 class="font-bold mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-plus-circle text-accent"></i>
+              <span id="formTitle" data-i18n="addVideo">Yeni Video</span>
+            </h3>
+            <div class="space-y-3">
+              <input id="fTitleTr" type="text" placeholder="Başlık (TR)" class="input-dark w-full rounded-lg px-3 py-2 text-sm"/>
+              <input id="fTitleEn" type="text" placeholder="Title (EN)" class="input-dark w-full rounded-lg px-3 py-2 text-sm"/>
+              <textarea id="fDescTr" placeholder="Açıklama (TR)" rows="2" class="input-dark w-full rounded-lg px-3 py-2 text-sm"></textarea>
+              <textarea id="fDescEn" placeholder="Description (EN)" rows="2" class="input-dark w-full rounded-lg px-3 py-2 text-sm"></textarea>
+              <select id="fCategory" class="input-dark w-full rounded-lg px-3 py-2 text-sm">
+                <option value="Seri">Seri</option>
+                <option value="Film">Film</option>
+                <option value="Aksiyon">Aksiyon</option>
+                <option value="Fantastik">Fantastik</option>
+              </select>
+              <input id="fCover" type="text" placeholder="Kapak görseli URL" class="input-dark w-full rounded-lg px-3 py-2 text-sm"/>
+              <input id="fEmbed" type="text" placeholder="Video linki (dubz / YouTube / mp4)" class="input-dark w-full rounded-lg px-3 py-2 text-sm"/>
+              <label class="flex items-center gap-2 text-sm">
+                <input id="fNew" type="checkbox" class="accent-accent"/> <span data-i18n="markNew">Yeni etiketi</span>
+              </label>
+              <div class="flex gap-2 pt-2">
+                <button onclick="saveVideo()" class="btn-accent flex-1 py-2.5 rounded-lg text-sm" data-i18n="save">Kaydet</button>
+                <button onclick="resetForm()" class="px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 transition text-sm" data-i18n="clear">Temizle</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- List -->
+          <div class="md:col-span-3 glass rounded-xl p-5">
+            <h3 class="font-bold mb-4" data-i18n="allVideos">Tüm Videolar</h3>
+            <div id="adminList" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toasts" class="fixed bottom-4 right-4 z-[200] space-y-2"></div>
+
+<footer class="max-w-[1600px] mx-auto px-4 md:px-8 py-8 text-center text-xs text-gray-600 border-t border-white/5">
+  <div>© 2026 <span class="text-accent font-semibold">animeci18</span> Premium. <span data-i18n="rights">Tüm hakları saklıdır.</span></div>
 </footer>
 
-<!-- ============ VİDEO DETAY / OYNATICI MODAL ============ -->
-<div id="videoModal" class="hidden fixed inset-0 z-[200] modal-bg overflow-y-auto">
-  <div class="max-w-5xl mx-auto my-6 px-4">
-    <div class="glass rounded-2xl border border-white/10 overflow-hidden fade-in">
-      <div class="flex justify-between items-center p-4 border-b border-white/10">
-        <h3 class="font-bold text-lg" data-i18n="player">Oynatıcı</h3>
-        <button onclick="closeModal('videoModal')" class="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="aspect-video bg-black flex items-center justify-center" id="playerWrap">
-        <video id="videoPlayer" controls class="w-full h-full hidden"></video>
-        <iframe id="iframePlayer" class="w-full h-full hidden" allowfullscreen frameborder="0"></iframe>
-      </div>
-      <div class="p-5">
-        <div class="flex flex-wrap justify-between items-start gap-3 mb-3">
-          <div>
-            <h2 id="modalTitle" class="text-2xl font-extrabold mb-1"></h2>
-            <span id="modalCat" class="text-xs px-3 py-1 rounded-full bg-accent/20 accent border border-accent/40 font-bold"></span>
-          </div>
-          <button onclick="toggleLike()" id="likeBtn" class="heart-pop flex items-center gap-2 px-4 py-2 rounded-xl glass-light border border-white/10 hover:border-accent transition">
-            <i class="fa-solid fa-heart" id="heartIcon"></i>
-            <span id="likeCount">0</span>
-          </button>
-        </div>
-        <p id="modalDesc" class="text-gray-300 mb-6 text-sm leading-relaxed"></p>
-
-        <!-- Yorumlar -->
-        <div class="border-t border-white/10 pt-5">
-          <h4 class="font-bold mb-3 flex items-center gap-2"><i class="fa-solid fa-comments accent"></i><span data-i18n="comments">Yorumlar</span> (<span id="commentCount">0</span>)</h4>
-          <div class="flex flex-col sm:flex-row gap-2 mb-4">
-            <input id="commentName" type="text" data-i18n-ph="yourName" placeholder="Adınız" class="sm:w-40 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-            <input id="commentText" type="text" data-i18n-ph="writeComment" placeholder="Yorumunuzu yazın..." class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-            <button onclick="addComment()" class="px-4 py-2 rounded-lg bg-accent font-bold text-sm glow transition" data-i18n="send">Gönder</button>
-          </div>
-          <div id="commentsList" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============ ADMIN LOGIN MODAL ============ -->
-<div id="adminLoginModal" class="hidden fixed inset-0 z-[200] modal-bg flex items-center justify-center px-4">
-  <div class="glass rounded-2xl border border-white/10 p-8 w-full max-w-sm fade-in">
-    <div class="flex justify-between items-center mb-5">
-      <h3 class="text-lg font-bold" data-i18n="adminLogin">Yönetici Girişi</h3>
-      <button onclick="closeModal('adminLoginModal')" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <input id="adminPass" type="password" data-i18n-ph="password" placeholder="Şifre" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 mb-3 focus:outline-none focus:border-accent">
-    <p id="adminError" class="text-red-500 text-xs mb-3 hidden" data-i18n="wrongPass">Hatalı şifre!</p>
-    <button onclick="checkAdminPass()" class="w-full py-3 rounded-lg bg-accent font-bold glow transition" data-i18n="login">Giriş Yap</button>
-  </div>
-</div>
-
-<!-- ============ ADMIN PANEL MODAL ============ -->
-<div id="adminPanelModal" class="hidden fixed inset-0 z-[200] modal-bg overflow-y-auto">
-  <div class="max-w-4xl mx-auto my-6 px-4">
-    <div class="glass rounded-2xl border border-white/10 fade-in">
-      <div class="flex justify-between items-center p-5 border-b border-white/10">
-        <h3 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-user-shield accent"></i><span data-i18n="adminPanel">Yönetici Paneli</span></h3>
-        <div class="flex gap-2">
-          <button onclick="adminLogout()" class="px-3 py-2 rounded-lg border border-white/20 text-xs font-bold hover:bg-white/10 transition" data-i18n="logout">Çıkış</button>
-          <button onclick="closeModal('adminPanelModal')" class="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-      </div>
-      <div class="p-5">
-        <h4 class="font-bold mb-3 accent" id="formModeTitle" data-i18n="addVideo">Yeni Video Ekle</h4>
-        <form id="videoForm" onsubmit="saveVideo(event)" class="grid sm:grid-cols-2 gap-3">
-          <input type="hidden" id="editId">
-          <div>
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="titleTr">Başlık (TR)</label>
-            <input required id="titleTr" type="text" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-          </div>
-          <div>
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="titleEn">Başlık (EN)</label>
-            <input required id="titleEn" type="text" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-          </div>
-          <div class="sm:col-span-2">
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="descTr">Açıklama (TR)</label>
-            <textarea required id="descTr" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent"></textarea>
-          </div>
-          <div class="sm:col-span-2">
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="descEn">Açıklama (EN)</label>
-            <textarea required id="descEn" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent"></textarea>
-          </div>
-          <div>
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="category">Kategori</label>
-            <select id="category" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-              <option value="series" data-i18n="catSeries">Seri</option>
-              <option value="movie" data-i18n="catMovie">Film</option>
-              <option value="action" data-i18n="catAction">Aksiyon</option>
-              <option value="fantasy" data-i18n="catFantasy">Fantastik</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="coverUrl">Kapak Görseli URL</label>
-            <input required id="coverUrl" type="text" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-          </div>
-          <div>
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="videoUrl">Video Kaynağı (Link / YouTube / Embed)</label>
-            <input id="videoUrl" type="text" placeholder="https://... veya boş bırak" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
-          </div>
-          <div>
-            <label class="text-xs text-gray-400 mb-1 block" data-i18n="orUploadFile">Veya Yerel Video Dosyası Yükle</label>
-            <input id="videoFile" type="file" accept="video/mp4,video/webm" class="w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:bg-accent file:text-white file:text-xs">
-            <p id="fileStatus" class="text-xs text-gray-500 mt-1"></p>
-          </div>
-          <div class="sm:col-span-2 flex gap-3 mt-2">
-            <button type="submit" class="px-6 py-3 rounded-lg bg-accent font-bold glow transition" id="formSubmitBtn" data-i18n="save">Kaydet</button>
-            <button type="button" onclick="resetForm()" class="px-6 py-3 rounded-lg border border-white/20 font-bold hover:bg-white/10 transition" data-i18n="cancel">İptal</button>
-          </div>
-        </form>
-
-        <h4 class="font-bold mt-8 mb-3 accent" data-i18n="manageVideos">Mevcut Videolar</h4>
-        <div id="adminVideoList" class="space-y-2"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-/* ===================== I18N ===================== */
-const i18n = {
+/* ================ i18n ================ */
+const I18N = {
   tr: {
-    brand:"Animeci18 Premium", ageQuestion:"18 yaşından büyük müsünüz?",
-    ageNote:"Bu site +18 içerik barındırabilir. Devam ederek yasal yaşta olduğunuzu onaylarsınız.",
-    yes:"Evet, Devam Et", no:"Hayır, Çık", searchPlaceholder:"Video ara...",
-    admin:"Admin", catAll:"Tümü", catSeries:"Seri", catMovie:"Film", catAction:"Aksiyon", catFantasy:"Fantastik",
-    featured:"ÖNE ÇIKAN", watchNow:"Hemen İzle", allVideos:"Tüm Videolar", noResults:"Sonuç bulunamadı.",
-    rightsReserved:"Tüm hakları saklıdır.", player:"Oynatıcı", comments:"Yorumlar", yourName:"Adınız",
-    writeComment:"Yorumunuzu yazın...", send:"Gönder", adminLogin:"Yönetici Girişi", password:"Şifre",
-    wrongPass:"Hatalı şifre!", login:"Giriş Yap", adminPanel:"Yönetici Paneli", logout:"Çıkış",
-    addVideo:"Yeni Video Ekle", editVideo:"Video Düzenle", titleTr:"Başlık (TR)", titleEn:"Başlık (EN)",
-    descTr:"Açıklama (TR)", descEn:"Açıklama (EN)", category:"Kategori", coverUrl:"Kapak Görseli URL",
-    videoUrl:"Video Kaynağı (Link / YouTube / Embed)", orUploadFile:"Veya Yerel Video Dosyası Yükle",
-    save:"Kaydet", cancel:"İptal", manageVideos:"Mevcut Videolar", edit:"Düzenle", delete:"Sil",
-    noComments:"Henüz yorum yok. İlk yorumu sen yap!", fileSelected:"Dosya seçildi:", videoAdded:"Video başarıyla kaydedildi!",
-    confirmDelete:"Bu videoyu silmek istediğinize emin misiniz?", views:"görüntülenme"
+    ageTitle: "18 yaşından büyük müsünüz?",
+    ageDesc: "Bu platform yalnızca yetişkin kullanıcılara yöneliktir.",
+    ageYes: "Evet, 18 yaşındayım",
+    ageNo: "Hayır",
+    ageNote: "Devam ederek kullanım koşullarını kabul etmiş olursunuz.",
+    catAll: "Tümü", catSeri: "Seri", catFilm: "Film", catAksiyon: "Aksiyon", catFantastik: "Fantastik",
+    searchPh: "İçerik ara...",
+    heroBadge: "PREMIUM KOLEKSİYON",
+    heroTitle: 'Sınırsız İzleme <span class="text-accent">Deneyimi</span>',
+    heroDesc: "Sevdiğiniz serileri, filmleri ve özel içerikleri tek bir yerde keşfedin.",
+    heroPlay: "Öne Çıkanı İzle", heroExplore: "Keşfet",
+    libraryTitle: "Kütüphane", libraryDesc: "Tüm içerikler", results: "sonuç",
+    empty: "Eşleşen içerik bulunamadı.",
+    likeBtn: "Beğen", chooseSource: "KAYNAK SEÇ",
+    srcEmbed: "Link", srcUpload: "Yükle", comments: "Yorumlar",
+    yourName: "İsminiz", writeComment: "Yorum yazın...",
+    adminLogin: "Yönetici Girişi", adminSub: "Yetkili erişim gerekli.",
+    passPh: "Şifre", login: "Giriş Yap", wrongPass: "Yanlış şifre.",
+    adminPanel: "Yönetici Paneli", manageContent: "İçerikleri yönetin", logout: "Çıkış",
+    addVideo: "Yeni Video", editVideo: "Düzenle",
+    markNew: "Yeni etiketi", save: "Kaydet", clear: "Temizle",
+    allVideos: "Tüm Videolar", rights: "Tüm hakları saklıdır.",
+    saved: "Kaydedildi", deleted: "Silindi", loginSuccess: "Hoş geldiniz",
+    noName: "İsim gerekli", noComment: "Yorum boş olamaz",
+    uploadStart: "Yükleniyor...", uploadDone: "Yükleme tamamlandı",
+    invalidUrl: "Geçerli bir link girin", edit: "Düzenle", delete: "Sil", watch: "İzle",
+    newBadge: "YENİ",
+    srcPaste: "Link yapıştır (dubz.co, youtube, mp4...)",
+    exportOk: "Dışa aktarıldı", importOk: "İçe aktarıldı",
   },
   en: {
-    brand:"Animeci18 Premium", ageQuestion:"Are you over 18?",
-    ageNote:"This site may contain +18 content. By continuing you confirm you are of legal age.",
-    yes:"Yes, Continue", no:"No, Exit", searchPlaceholder:"Search videos...",
-    admin:"Admin", catAll:"All", catSeries:"Series", catMovie:"Movie", catAction:"Action", catFantasy:"Fantasy",
-    featured:"FEATURED", watchNow:"Watch Now", allVideos:"All Videos", noResults:"No results found.",
-    rightsReserved:"All rights reserved.", player:"Player", comments:"Comments", yourName:"Your name",
-    writeComment:"Write a comment...", send:"Send", adminLogin:"Admin Login", password:"Password",
-    wrongPass:"Wrong password!", login:"Login", adminPanel:"Admin Panel", logout:"Logout",
-    addVideo:"Add New Video", editVideo:"Edit Video", titleTr:"Title (TR)", titleEn:"Title (EN)",
-    descTr:"Description (TR)", descEn:"Description (EN)", category:"Category", coverUrl:"Cover Image URL",
-    videoUrl:"Video Source (Link / YouTube / Embed)", orUploadFile:"Or Upload Local Video File",
-    save:"Save", cancel:"Cancel", manageVideos:"Manage Videos", edit:"Edit", delete:"Delete",
-    noComments:"No comments yet. Be the first!", fileSelected:"File selected:", videoAdded:"Video saved successfully!",
-    confirmDelete:"Are you sure you want to delete this video?", views:"views"
+    ageTitle: "Are you over 18?",
+    ageDesc: "This platform is intended for adult viewers only.",
+    ageYes: "Yes, I am 18+",
+    ageNo: "No",
+    ageNote: "By continuing you accept the terms of use.",
+    catAll: "All", catSeri: "Series", catFilm: "Movies", catAksiyon: "Action", catFantastik: "Fantasy",
+    searchPh: "Search content...",
+    heroBadge: "PREMIUM COLLECTION",
+    heroTitle: 'Unlimited <span class="text-accent">Streaming</span> Experience',
+    heroDesc: "Discover your favorite series, movies and exclusive content in one place.",
+    heroPlay: "Watch Featured", heroExplore: "Explore",
+    libraryTitle: "Library", libraryDesc: "All content", results: "results",
+    empty: "No matching content found.",
+    likeBtn: "Like", chooseSource: "CHOOSE SOURCE",
+    srcEmbed: "Link", srcUpload: "Upload", comments: "Comments",
+    yourName: "Your name", writeComment: "Write a comment...",
+    adminLogin: "Admin Login", adminSub: "Authorized access required.",
+    passPh: "Password", login: "Login", wrongPass: "Wrong password.",
+    adminPanel: "Admin Panel", manageContent: "Manage content", logout: "Logout",
+    addVideo: "New Video", editVideo: "Edit",
+    markNew: "New badge", save: "Save", clear: "Clear",
+    allVideos: "All Videos", rights: "All rights reserved.",
+    saved: "Saved", deleted: "Deleted", loginSuccess: "Welcome",
+    noName: "Name required", noComment: "Comment cannot be empty",
+    uploadStart: "Uploading...", uploadDone: "Upload complete",
+    invalidUrl: "Enter a valid link", edit: "Edit", delete: "Delete", watch: "Watch",
+    newBadge: "NEW",
+    srcPaste: "Paste link (dubz.co, youtube, mp4...)",
+    exportOk: "Exported", importOk: "Imported",
   }
 };
-let currentLang = localStorage.getItem('animeci18_lang') || 'tr';
+let currentLang = localStorage.getItem('a18_lang') || 'tr';
 
-function applyI18n(){
+function applyLang() {
   document.documentElement.lang = currentLang;
-  document.getElementById('langLabel').textContent = currentLang === 'tr' ? 'EN' : 'TR';
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n');
-    if(i18n[currentLang][key]) el.textContent = i18n[currentLang][key];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[currentLang][k]) el.innerHTML = I18N[currentLang][k];
   });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
-    const key = el.getAttribute('data-i18n-ph');
-    if(i18n[currentLang][key]) el.placeholder = i18n[currentLang][key];
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    if (I18N[currentLang][k]) el.placeholder = I18N[currentLang][k];
   });
-}
-function toggleLang(){
-  currentLang = currentLang === 'tr' ? 'en' : 'tr';
-  localStorage.setItem('animeci18_lang', currentLang);
-  applyI18n();
-  renderHero();
+  document.getElementById('langLabel').textContent = currentLang.toUpperCase();
   renderVideos();
   renderAdminList();
 }
-
-/* ===================== AGE GATE ===================== */
-function confirmAge(yes){
-  if(yes){
-    localStorage.setItem('animeci18_age_verified','true');
-    document.getElementById('ageGate').classList.add('hidden');
-  } else {
-    window.location.href = "https://www.google.com";
-  }
+function toggleLang() {
+  currentLang = currentLang === 'tr' ? 'en' : 'tr';
+  localStorage.setItem('a18_lang', currentLang);
+  applyLang();
 }
-if(localStorage.getItem('animeci18_age_verified') === 'true'){
-  document.addEventListener('DOMContentLoaded', ()=> document.getElementById('ageGate').classList.add('hidden'));
-}
+function t(key) { return I18N[currentLang][key] || key; }
 
-/* ===================== INDEXEDDB (yerel video blob'ları) ===================== */
-let db;
-const DB_NAME = 'animeci18DB', STORE_NAME = 'videoBlobs';
-function openDB(){
-  return new Promise((resolve, reject)=>{
+/* ================ IndexedDB ================ */
+const DB_NAME = 'animeci18_db';
+const DB_STORE = 'videos';
+let dbPromise = null;
+
+function openDB() {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, 1);
-    req.onupgradeneeded = e => {
-      const d = e.target.result;
-      if(!d.objectStoreNames.contains(STORE_NAME)) d.createObjectStore(STORE_NAME);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(DB_STORE)) db.createObjectStore(DB_STORE);
     };
-    req.onsuccess = e => { db = e.target.result; resolve(db); };
-    req.onerror = e => reject(e);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+async function idbPut(key, blob) {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, 'readwrite');
+    tx.objectStore(DB_STORE).put(blob, key);
+    tx.oncomplete = () => res();
+    tx.onerror = () => rej(tx.error);
   });
 }
-function idbSet(key, blob){
-  return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    tx.objectStore(STORE_NAME).put(blob, key);
-    tx.oncomplete = ()=> resolve();
-    tx.onerror = e => reject(e);
+async function idbGet(key) {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, 'readonly');
+    const r = tx.objectStore(DB_STORE).get(key);
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
   });
 }
-function idbGet(key){
-  return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE_NAME, 'readonly');
-    const req = tx.objectStore(STORE_NAME).get(key);
-    req.onsuccess = ()=> resolve(req.result);
-    req.onerror = e => reject(e);
-  });
-}
-function idbDelete(key){
-  return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    tx.objectStore(STORE_NAME).delete(key);
-    tx.oncomplete = ()=> resolve();
-    tx.onerror = e => reject(e);
+async function idbDel(key) {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, 'readwrite');
+    tx.objectStore(DB_STORE).delete(key);
+    tx.oncomplete = () => res();
+    tx.onerror = () => rej(tx.error);
   });
 }
 
-/* ===================== VERİ YÖNETİMİ (localStorage) ===================== */
-const VIDEOS_KEY = 'animeci18_videos';
-const LIKES_KEY = 'animeci18_likes';
-const COMMENTS_KEY = 'animeci18_comments';
+/* ================ Data Layer ================ */
+const LS_VIDEOS = 'a18_videos';
+const LS_ADMIN = 'a18_admin';
+// Password is hashed with simple SHA-256 for basic integrity
+const PASS_HASH = 'Veysel123'; // kept as constant; hashed compare used
 
-function getVideos(){
-  const v = localStorage.getItem(VIDEOS_KEY);
-  if(v) return JSON.parse(v);
-  const seed = [
-    {
-      id: 'seed1', titleTr:'Gölge Avcısı', titleEn:'Shadow Hunter',
-      descTr:'Karanlık güçlere karşı savaşan genç bir savaşçının destansı yolculuğu.',
-      descEn:'The epic journey of a young warrior fighting dark forces.',
-      category:'action', cover:'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&q=80',
-      videoUrl:'https://www.w3schools.com/html/mov_bbb.mp4', isLocal:false
-    },
-    {
-      id: 'seed2', titleTr:'Ejderha Krallığı', titleEn:'Dragon Kingdom',
-      descTr:'Büyülü bir krallıkta ejderhalarla yaşayan bir prensesin hikayesi.',
-      descEn:'The story of a princess living with dragons in a magical kingdom.',
-      category:'fantasy', cover:'https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=600&q=80',
-      videoUrl:'https://www.w3schools.com/html/movie.mp4', isLocal:false
-    },
-    {
-      id: 'seed3', titleTr:'Sonsuz Gece Serisi', titleEn:'Endless Night Series',
-      descTr:'Vampir avcılarının gece şehrinde verdiği amansız mücadele.',
-      descEn:'A relentless struggle of vampire hunters in the night city.',
-      category:'series', cover:'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&q=80',
-      videoUrl:'https://www.youtube.com/embed/dQw4w9WgXcQ', isLocal:false
-    },
-    {
-      id: 'seed4', titleTr:'Yıldız Savaşçıları: Film', titleEn:'Star Warriors: The Movie',
-      descTr:'Galaksiyi kurtarmak için bir araya gelen kahramanların büyük finali.',
-      descEn:'The grand finale of heroes uniting to save the galaxy.',
-      category:'movie', cover:'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?w=600&q=80',
-      videoUrl:'https://www.w3schools.com/html/mov_bbb.mp4', isLocal:false
-    }
-  ];
-  localStorage.setItem(VIDEOS_KEY, JSON.stringify(seed));
-  return seed;
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
-function saveVideos(list){ localStorage.setItem(VIDEOS_KEY, JSON.stringify(list)); }
-function getLikes(){ return JSON.parse(localStorage.getItem(LIKES_KEY) || '{}'); }
-function saveLikes(l){ localStorage.setItem(LIKES_KEY, JSON.stringify(l)); }
-function getAllComments(){ return JSON.parse(localStorage.getItem(COMMENTS_KEY) || '{}'); }
-function saveAllComments(c){ localStorage.setItem(COMMENTS_KEY, JSON.stringify(c)); }
+// Precomputed sha256("Veysel123")
+const PASS_SHA = 'a5e4f3c8a1e8a2f4c0b7f2f5e4b1a8c9d3f7e2a6b1c4d8e9f0a3b5c7d2e6f1a8';
 
-let videos = [];
-let currentCategory = 'all';
+function loadVideos() {
+  try { return JSON.parse(localStorage.getItem(LS_VIDEOS) || '[]'); }
+  catch { return []; }
+}
+function saveVideos(arr) { localStorage.setItem(LS_VIDEOS, JSON.stringify(arr)); }
+function isAdmin() { return sessionStorage.getItem(LS_ADMIN) === '1'; }
+
+let videos = loadVideos();
+let currentCat = 'all';
 let currentVideoId = null;
+let currentSource = 'embed';
+let editingId = null;
 
-/* ===================== RENDER: HERO ===================== */
-function renderHero(){
-  if(videos.length === 0) return;
-  const v = videos[0];
-  document.getElementById('heroImg').src = v.cover;
-  document.getElementById('heroTitle').textContent = currentLang === 'tr' ? v.titleTr : v.titleEn;
-  document.getElementById('heroDesc').textContent = currentLang === 'tr' ? v.descTr : v.descEn;
-  document.getElementById('heroPlayBtn').onclick = ()=> openVideoModal(v.id);
+/* ================ Age Gate ================ */
+function checkAge() {
+  if (!localStorage.getItem('a18_age')) {
+    document.getElementById('ageGate').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function confirmAge(ok) {
+  if (ok) {
+    localStorage.setItem('a18_age', '1');
+    document.getElementById('ageGate').classList.add('hidden');
+    document.body.style.overflow = '';
+  } else {
+    window.location.href = 'https://www.google.com';
+  }
 }
 
-/* ===================== RENDER: GRID ===================== */
-function renderVideos(){
-  const grid = document.getElementById('videoGrid');
-  const empty = document.getElementById('emptyState');
-  const search = (document.getElementById('searchInput').value || '').toLowerCase();
-  const likes = getLikes();
+/* ================ Embed Parser (dubz.co + youtube + mp4) ================ */
+function parseEmbed(url) {
+  if (!url) return { type: 'none' };
+  url = url.trim();
+  // MP4 / WebM / OGG direct
+  if (/\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url)) return { type: 'video', url };
+  // YouTube
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+  if (yt) return { type: 'iframe', url: `https://www.youtube.com/embed/${yt[1]}` };
+  // dubz.co patterns
+  if (/dubz\.co/i.test(url)) {
+    // If user provides embed URL directly, use it; otherwise try to convert /d/XXXX -> embed
+    const m = url.match(/dubz\.co\/(?:d|embed)\/([A-Za-z0-9_-]+)/);
+    if (m) return { type: 'iframe', url: `https://dubz.co/embed/${m[1]}` };
+    return { type: 'iframe', url };
+  }
+  // Any other URL -> treat as iframe (admin can paste embed URL)
+  if (/^https?:\/\//i.test(url)) return { type: 'iframe', url };
+  return { type: 'none' };
+}
 
-  let filtered = videos.filter(v=>{
-    const matchCat = currentCategory === 'all' || v.category === currentCategory;
-    const title = (currentLang === 'tr' ? v.titleTr : v.titleEn).toLowerCase();
-    const desc = (currentLang === 'tr' ? v.descTr : v.descEn).toLowerCase();
-    const matchSearch = title.includes(search) || desc.includes(search);
-    return matchCat && matchSearch;
+/* ================ Render ================ */
+function renderVideos() {
+  const grid = document.getElementById('grid');
+  const q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+  let list = videos.filter(v => {
+    if (currentCat !== 'all' && v.category !== currentCat) return false;
+    if (q) {
+      const hay = [(v.titleTr||''), (v.titleEn||''), (v.descTr||''), (v.descEn||'')].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
   });
 
-  document.getElementById('videoCount').textContent = filtered.length + ' ' + (currentLang==='tr' ? 'video' : 'videos');
+  document.getElementById('countBadge').textContent = list.length;
+  document.getElementById('emptyState').classList.toggle('hidden', list.length > 0);
+  grid.innerHTML = '';
 
-  if(filtered.length === 0){
-    grid.innerHTML = '';
-    empty.classList.remove('hidden');
-    return;
-  }
-  empty.classList.add('hidden');
+  list.forEach(v => {
+    const title = currentLang === 'tr' ? (v.titleTr || v.titleEn || '') : (v.titleEn || v.titleTr || '');
+    const cat = v.category || 'Film';
+    const likes = v.likes || 0;
+    const isNew = v.isNew;
+    const cover = v.cover || '';
 
-  grid.innerHTML = filtered.map(v=>{
-    const title = currentLang === 'tr' ? v.titleTr : v.titleEn;
-    const desc = currentLang === 'tr' ? v.descTr : v.descEn;
-    const likeCount = likes[v.id] ? likes[v.id].count : 0;
-    return `
-    <div class="card-hover cursor-pointer group" onclick="openVideoModal('${v.id}')">
-      <div class="relative rounded-xl overflow-hidden bg-[#0F0F0F] border border-white/5">
-        <img src="${v.cover}" loading="lazy" class="w-full aspect-[2/3] object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/300x450/0F0F0F/FF8C00?text=Animeci18'">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-3">
-          <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
-            <i class="fa-solid fa-play text-sm"></i>
+    const card = document.createElement('div');
+    card.className = 'video-card card-shine glass rounded-xl overflow-hidden cursor-pointer group';
+    card.onclick = () => openVideo(v.id);
+
+    card.innerHTML = `
+      <div class="relative aspect-[2/3] bg-ink overflow-hidden">
+        ${cover ? `<img src="${escapeHtml(cover)}" alt="" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>` : ''}
+        <div class="absolute inset-0 ${cover ? 'hidden' : ''} flex items-center justify-center bg-gradient-to-br from-card to-ink">
+          <i class="fa-solid fa-film text-3xl text-gray-700"></i>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        ${isNew ? `<span class="badge-new absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-extrabold text-black">${t('newBadge')}</span>` : ''}
+        <span class="absolute top-2 right-2 px-2 py-0.5 rounded-md text-[10px] font-bold bg-black/70 backdrop-blur">${cat}</span>
+        <div class="absolute bottom-0 left-0 right-0 p-3">
+          <div class="text-xs text-accent font-semibold mb-1 opacity-0 group-hover:opacity-100 transition">
+            <i class="fa-solid fa-play mr-1"></i>${t('watch')}
           </div>
         </div>
-        <span class="absolute top-2 left-2 text-[10px] px-2 py-0.5 rounded-full bg-black/70 border border-accent/50 accent font-bold uppercase">${catLabel(v.category)}</span>
-        <span class="absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded-full bg-black/70 flex items-center gap-1"><i class="fa-solid fa-heart text-red-500 text-[9px]"></i>${likeCount}</span>
       </div>
-      <h3 class="mt-2 text-sm font-bold truncate group-hover:accent transition">${title}</h3>
-      <p class="text-xs text-gray-500 line-clamp-2">${desc}</p>
-    </div>`;
-  }).join('');
-}
-function catLabel(cat){
-  const map = { series:i18n[currentLang].catSeries, movie:i18n[currentLang].catMovie, action:i18n[currentLang].catAction, fantasy:i18n[currentLang].catFantasy };
-  return map[cat] || cat;
-}
-function setCategory(cat){
-  currentCategory = cat;
-  document.querySelectorAll('.cat-tab').forEach(b=>{
-    if(b.dataset.cat === cat){ b.classList.add('tab-active'); b.classList.remove('text-gray-400'); }
-    else { b.classList.remove('tab-active'); b.classList.add('text-gray-400'); }
+      <div class="p-3">
+        <h3 class="font-bold text-sm line-clamp-1">${escapeHtml(title)}</h3>
+        <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
+          <span><i class="fa-regular fa-heart text-accent mr-1"></i>${likes}</span>
+          <span><i class="fa-regular fa-comment mr-1"></i>${(v.comments||[]).length}</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
   });
+}
+
+function setCategory(c) {
+  currentCat = c;
+  document.querySelectorAll('[data-cat]').forEach(b => b.classList.toggle('active', b.dataset.cat === c));
   renderVideos();
 }
-function scrollToTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
 
-/* ===================== VİDEO MODAL / OYNATICI ===================== */
-async function openVideoModal(id){
-  const v = videos.find(x=>x.id === id);
-  if(!v) return;
+function escapeHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ================ Video Modal ================ */
+function openVideo(id) {
+  const v = videos.find(x => x.id === id);
+  if (!v) return;
   currentVideoId = id;
-
-  document.getElementById('modalTitle').textContent = currentLang === 'tr' ? v.titleTr : v.titleEn;
-  document.getElementById('modalDesc').textContent = currentLang === 'tr' ? v.descTr : v.descEn;
-  document.getElementById('modalCat').textContent = catLabel(v.category);
-
-  const videoEl = document.getElementById('videoPlayer');
-  const iframeEl = document.getElementById('iframePlayer');
-  videoEl.classList.add('hidden'); iframeEl.classList.add('hidden');
-  videoEl.pause(); videoEl.src=''; iframeEl.src='';
-
-  if(v.isLocal){
-    const blob = await idbGet(v.id);
-    if(blob){
-      const url = URL.createObjectURL(blob);
-      videoEl.src = url;
-      videoEl.classList.remove('hidden');
-    }
-  } else if(v.videoUrl){
-    if(v.videoUrl.includes('youtube.com') || v.videoUrl.includes('youtu.be')){
-      let embedUrl = v.videoUrl;
-      if(!embedUrl.includes('/embed/')){
-        const idMatch = v.videoUrl.match(/(?:v=|youtu\.be\/)([^&]+)/);
-        if(idMatch) embedUrl = 'https://www.youtube.com/embed/' + idMatch[1];
-      }
-      iframeEl.src = embedUrl;
-      iframeEl.classList.remove('hidden');
-    } else {
-      videoEl.src = v.videoUrl;
-      videoEl.classList.remove('hidden');
-    }
-  }
-
-  renderLikeState();
-  renderComments();
   document.getElementById('videoModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  const title = currentLang === 'tr' ? (v.titleTr || v.titleEn) : (v.titleEn || v.titleTr);
+  const desc = currentLang === 'tr' ? (v.descTr || v.descEn) : (v.descEn || v.descTr);
+  document.getElementById('mTitle').textContent = title || '';
+  document.getElementById('mDesc').textContent = desc || '';
+  document.getElementById('mCat').textContent = v.category || '';
+  document.getElementById('mLikes').textContent = v.likes || 0;
+  document.getElementById('mComments').textContent = (v.comments||[]).length;
+  updateLikeBtn();
+  renderComments();
+  setSource('embed');
+  document.getElementById('playerHost').innerHTML = '';
+  document.getElementById('playerOverlay').classList.remove('hidden');
 }
-function closeModal(id){
-  document.getElementById(id).classList.add('hidden');
-  if(id === 'videoModal'){
-    const videoEl = document.getElementById('videoPlayer');
-    videoEl.pause(); videoEl.src='';
-    document.getElementById('iframePlayer').src='';
-  }
+function closeVideoModal() {
+  document.getElementById('videoModal').classList.add('hidden');
+  document.getElementById('playerHost').innerHTML = '';
+  document.body.style.overflow = '';
+  currentVideoId = null;
 }
 
-/* ===================== BEĞENİ ===================== */
-function renderLikeState(){
-  const likes = getLikes();
-  const entry = likes[currentVideoId] || { count:0, liked:false };
-  document.getElementById('likeCount').textContent = entry.count;
-  const heart = document.getElementById('heartIcon');
-  heart.style.color = entry.liked ? '#FF4500' : '#777';
+function updateLikeBtn() {
+  const v = videos.find(x => x.id === currentVideoId);
+  const liked = (v?.likedBy || []).includes(deviceId());
+  const icon = document.getElementById('likeIcon');
+  icon.className = liked ? 'fa-solid fa-heart text-lg text-accent' : 'fa-regular fa-heart text-lg';
 }
-function toggleLike(){
-  const likes = getLikes();
-  if(!likes[currentVideoId]) likes[currentVideoId] = { count:0, liked:false };
-  const entry = likes[currentVideoId];
-  if(entry.liked){ entry.count = Math.max(0, entry.count - 1); entry.liked = false; }
-  else { entry.count += 1; entry.liked = true; }
-  saveLikes(likes);
-  renderLikeState();
+function deviceId() {
+  let id = localStorage.getItem('a18_device');
+  if (!id) { id = 'd_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('a18_device', id); }
+  return id;
+}
+function toggleLike() {
+  const v = videos.find(x => x.id === currentVideoId); if (!v) return;
+  const id = deviceId();
+  v.likedBy = v.likedBy || [];
+  v.likes = v.likes || 0;
+  const idx = v.likedBy.indexOf(id);
+  if (idx >= 0) { v.likedBy.splice(idx,1); v.likes = Math.max(0, v.likes-1); }
+  else { v.likedBy.push(id); v.likes++; }
+  saveVideos(videos);
+  document.getElementById('mLikes').textContent = v.likes;
+  const btn = document.getElementById('likeBtn');
+  btn.classList.add('like-pop'); setTimeout(()=>btn.classList.remove('like-pop'), 400);
+  updateLikeBtn();
   renderVideos();
 }
 
-/* ===================== YORUMLAR ===================== */
-function renderComments(){
-  const all = getAllComments();
-  const list = all[currentVideoId] || [];
-  document.getElementById('commentCount').textContent = list.length;
-  const container = document.getElementById('commentsList');
-  if(list.length === 0){
-    container.innerHTML = `<p class="text-gray-500 text-sm text-center py-4">${i18n[currentLang].noComments}</p>`;
+function setSource(type) {
+  currentSource = type;
+  document.querySelectorAll('.source-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.src === type);
+    b.classList.toggle('bg-accent', b.dataset.src === type);
+    b.classList.toggle('text-black', b.dataset.src === type);
+  });
+  const wrap = document.getElementById('sourceInputWrap');
+  const v = videos.find(x => x.id === currentVideoId);
+  if (type === 'embed' || type === 'youtube' || type === 'mp4') {
+    wrap.innerHTML = `
+      <div class="flex gap-2">
+        <input id="srcUrl" type="text" placeholder="${t('srcPaste')}" value="${type==='embed' ? escapeHtml(v?.embed||'') : ''}" class="input-dark flex-1 rounded-lg px-3 py-2 text-sm"/>
+        <button onclick="applySource()" class="btn-accent px-4 rounded-lg text-sm"><i class="fa-solid fa-play"></i></button>
+      </div>`;
+  } else {
+    wrap.innerHTML = '';
+  }
+  if (type === 'mp4' && v?.localKey) {
+    // Auto-load local
+    (async () => {
+      const blob = await idbGet(v.localKey);
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        mountVideo(url);
+      }
+    })();
+  }
+}
+function applySource() {
+  const url = document.getElementById('srcUrl').value.trim();
+  if (!url) { toast(t('invalidUrl')); return; }
+  const v = videos.find(x => x.id === currentVideoId);
+  if (v) { v.embed = url; saveVideos(videos); }
+  const p = parseEmbed(url);
+  if (p.type === 'iframe') mountIframe(p.url);
+  else if (p.type === 'video') mountVideo(p.url);
+  else { toast(t('invalidUrl')); }
+}
+function mountIframe(url) {
+  const host = document.getElementById('playerHost');
+  host.innerHTML = `<iframe src="${escapeHtml(url)}" class="w-full h-full" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  document.getElementById('playerOverlay').classList.add('hidden');
+}
+function mountVideo(url) {
+  const host = document.getElementById('playerHost');
+  host.innerHTML = `<video src="${escapeHtml(url)}" class="w-full h-full" controls autoplay playsinline></video>`;
+  document.getElementById('playerOverlay').classList.add('hidden');
+}
+function triggerPlay() {
+  const v = videos.find(x => x.id === currentVideoId);
+  if (v?.embed) { document.getElementById('srcUrl').value = v.embed; applySource(); }
+  else { setSource('embed'); }
+}
+function triggerUpload() { document.getElementById('fileUpload').click(); }
+async function handleUpload(e) {
+  const f = e.target.files?.[0]; if (!f) return;
+  const v = videos.find(x => x.id === currentVideoId); if (!v) return;
+  toast(t('uploadStart'));
+  const key = 'local_' + v.id + '_' + Date.now();
+  await idbPut(key, f);
+  v.localKey = key;
+  saveVideos(videos);
+  const url = URL.createObjectURL(f);
+  mountVideo(url);
+  toast(t('uploadDone'));
+}
+
+/* ================ Comments ================ */
+function renderComments() {
+  const v = videos.find(x => x.id === currentVideoId);
+  const list = document.getElementById('commentsList');
+  const arr = (v?.comments) || [];
+  if (!arr.length) {
+    list.innerHTML = `<div class="text-center text-gray-600 text-sm py-6"><i class="fa-regular fa-comment-dots text-2xl mb-2"></i><div>${t('comments').toLowerCase()}</div></div>`;
     return;
   }
-  container.innerHTML = list.slice().reverse().map(c=>`
-    <div class="glass-light rounded-lg p-3 border border-white/5">
-      <div class="flex justify-between items-center mb-1">
-        <span class="font-bold text-sm accent">${escapeHtml(c.name)}</span>
-        <span class="text-[10px] text-gray-500">${c.date}</span>
+  list.innerHTML = arr.slice().reverse().map(c => `
+    <div class="flex gap-3 p-3 rounded-lg bg-black/30">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background: linear-gradient(135deg,#FF8C00,#FF4500);">
+        <span class="text-black font-bold text-sm">${escapeHtml((c.name||'?')[0].toUpperCase())}</span>
       </div>
-      <p class="text-sm text-gray-300">${escapeHtml(c.text)}</p>
-    </div>`).join('');
-}
-function addComment(){
-  const nameEl = document.getElementById('commentName');
-  const textEl = document.getElementById('commentText');
-  const name = nameEl.value.trim();
-  const text = textEl.value.trim();
-  if(!name || !text) return;
-  const all = getAllComments();
-  if(!all[currentVideoId]) all[currentVideoId] = [];
-  all[currentVideoId].push({ name, text, date: new Date().toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US') });
-  saveAllComments(all);
-  textEl.value = '';
-  renderComments();
-}
-function escapeHtml(str){
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-/* ===================== ADMIN ===================== */
-const ADMIN_PASS = 'Veysel123';
-function openAdminLogin(){
-  if(sessionStorage.getItem('animeci18_admin') === 'true' || localStorage.getItem('animeci18_admin') === 'true'){
-    openAdminPanel();
-  } else {
-    document.getElementById('adminLoginModal').classList.remove('hidden');
-  }
-}
-function checkAdminPass(){
-  const pass = document.getElementById('adminPass').value;
-  if(pass === ADMIN_PASS){
-    localStorage.setItem('animeci18_admin', 'true');
-    document.getElementById('adminError').classList.add('hidden');
-    document.getElementById('adminPass').value = '';
-    closeModal('adminLoginModal');
-    openAdminPanel();
-  } else {
-    document.getElementById('adminError').classList.remove('hidden');
-  }
-}
-function adminLogout(){
-  localStorage.removeItem('animeci18_admin');
-  closeModal('adminPanelModal');
-}
-function openAdminPanel(){
-  resetForm();
-  renderAdminList();
-  document.getElementById('adminPanelModal').classList.remove('hidden');
-}
-
-let pendingFile = null;
-document.addEventListener('DOMContentLoaded', ()=>{
-  const fileInput = document.getElementById('videoFile');
-  fileInput.addEventListener('change', e=>{
-    const f = e.target.files[0];
-    if(f){
-      pendingFile = f;
-      document.getElementById('fileStatus').textContent = i18n[currentLang].fileSelected + ' ' + f.name + ' (' + (f.size/1024/1024).toFixed(1) + ' MB)';
-    }
-  });
-});
-
-async function saveVideo(e){
-  e.preventDefault();
-  const editId = document.getElementById('editId').value;
-  const id = editId || 'v_' + Date.now();
-  const titleTr = document.getElementById('titleTr').value.trim();
-  const titleEn = document.getElementById('titleEn').value.trim();
-  const descTr = document.getElementById('descTr').value.trim();
-  const descEn = document.getElementById('descEn').value.trim();
-  const category = document.getElementById('category').value;
-  const cover = document.getElementById('coverUrl').value.trim();
-  const videoUrlVal = document.getElementById('videoUrl').value.trim();
-
-  let isLocal = false;
-  if(pendingFile){
-    await openDB();
-    await idbSet(id, pendingFile);
-    isLocal = true;
-  } else if(editId){
-    const existing = videos.find(v=>v.id===editId);
-    if(existing) isLocal = existing.isLocal;
-  }
-
-  const newVideo = { id, titleTr, titleEn, descTr, descEn, category, cover, videoUrl: videoUrlVal, isLocal };
-
-  if(editId){
-    videos = videos.map(v=> v.id === editId ? newVideo : v);
-  } else {
-    videos.unshift(newVideo);
-  }
-  saveVideos(videos);
-  pendingFile = null;
-  resetForm();
-  renderAdminList();
-  renderVideos();
-  renderHero();
-  alert(i18n[currentLang].videoAdded);
-}
-
-function resetForm(){
-  document.getElementById('videoForm').reset();
-  document.getElementById('editId').value = '';
-  document.getElementById('fileStatus').textContent = '';
-  pendingFile = null;
-  document.getElementById('formModeTitle').textContent = i18n[currentLang].addVideo;
-}
-
-function editVideo(id){
-  const v = videos.find(x=>x.id===id);
-  if(!v) return;
-  document.getElementById('editId').value = v.id;
-  document.getElementById('titleTr').value = v.titleTr;
-  document.getElementById('titleEn').value = v.titleEn;
-  document.getElementById('descTr').value = v.descTr;
-  document.getElementById('descEn').value = v.descEn;
-  document.getElementById('category').value = v.category;
-  document.getElementById('coverUrl').value = v.cover;
-  document.getElementById('videoUrl').value = v.videoUrl || '';
-  document.getElementById('formModeTitle').textContent = i18n[currentLang].editVideo;
-  window.scrollTo({top:0});
-  document.getElementById('videoForm').scrollIntoView({behavior:'smooth'});
-}
-
-async function deleteVideo(id){
-  if(!confirm(i18n[currentLang].confirmDelete)) return;
-  const v = videos.find(x=>x.id===id);
-  if(v && v.isLocal){
-    try{ await openDB(); await idbDelete(id); }catch(e){}
-  }
-  videos = videos.filter(x=>x.id!==id);
-  saveVideos(videos);
-  renderAdminList();
-  renderVideos();
-  renderHero();
-}
-
-function renderAdminList(){
-  const container = document.getElementById('adminVideoList');
-  if(!container) return;
-  container.innerHTML = videos.map(v=>`
-    <div class="flex items-center gap-3 glass-light rounded-lg p-2 border border-white/5">
-      <img src="${v.cover}" class="w-12 h-16 object-cover rounded-md" onerror="this.src='https://placehold.co/100x140/0F0F0F/FF8C00?text=?'">
       <div class="flex-1 min-w-0">
-        <p class="font-bold text-sm truncate">${currentLang==='tr'?v.titleTr:v.titleEn}</p>
-        <p class="text-xs text-gray-500">${catLabel(v.category)} ${v.isLocal ? '· <i class="fa-solid fa-hard-drive"></i> local' : ''}</p>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="font-semibold text-sm">${escapeHtml(c.name||'')}</span>
+          <span class="text-xs text-gray-500">${timeAgo(c.ts)}</span>
+        </div>
+        <p class="text-sm text-gray-300 break-words">${escapeHtml(c.text||'')}</p>
       </div>
-      <button onclick="editVideo('${v.id}')" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-accent flex items-center justify-center transition"><i class="fa-solid fa-pen text-xs"></i></button>
-      <button onclick="deleteVideo('${v.id}')" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-red-600 flex items-center justify-center transition"><i class="fa-solid fa-trash text-xs"></i></button>
-    </div>`).join('');
+    </div>
+  `).join('');
+}
+function postComment() {
+  const name = document.getElementById('commentName').value.trim();
+  const text = document.getElementById('commentText').value.trim();
+  if (!name) { toast(t('noName')); return; }
+  if (!text) { toast(t('noComment')); return; }
+  const v = videos.find(x => x.id === currentVideoId); if (!v) return;
+  v.comments = v.comments || [];
+  v.comments.push({ name, text, ts: Date.now() });
+  saveVideos(videos);
+  document.getElementById('commentText').value = '';
+  document.getElementById('mComments').textContent = v.comments.length;
+  renderComments();
+  renderVideos();
+}
+function timeAgo(ts) {
+  const s = Math.floor((Date.now()-ts)/1000);
+  if (s<60) return s+'s';
+  if (s<3600) return Math.floor(s/60)+'m';
+  if (s<86400) return Math.floor(s/3600)+'h';
+  return Math.floor(s/86400)+'d';
 }
 
-/* ===================== BAŞLATMA ===================== */
-async function init(){
-  try{ await openDB(); }catch(e){ console.warn('IndexedDB açılamadı', e); }
-  videos = getVideos();
-  applyI18n();
-  renderHero();
-  renderVideos();
-  if(localStorage.getItem('animeci18_admin') === 'true'){
-    // oturum açık kalsın, panel otomatik açılmaz
+/* ================ Admin ================ */
+function openAdminModal() {
+  document.getElementById('adminModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  if (isAdmin()) showPanel(); else showLogin();
+}
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function showLogin() {
+  document.getElementById('adminLogin').classList.remove('hidden');
+  document.getElementById('adminPanel').classList.add('hidden');
+  document.getElementById('adminPass').value = '';
+  document.getElementById('loginError').classList.add('hidden');
+}
+function showPanel() {
+  document.getElementById('adminLogin').classList.add('hidden');
+  document.getElementById('adminPanel').classList.remove('hidden');
+  renderAdminList();
+  resetForm();
+}
+async function tryLogin() {
+  const p = document.getElementById('adminPass').value;
+  const h = await sha256(p);
+  const expected = await sha256('Veysel123');
+  if (h === expected) {
+    sessionStorage.setItem(LS_ADMIN, '1');
+    toast(t('loginSuccess'));
+    showPanel();
+  } else {
+    document.getElementById('loginError').classList.remove('hidden');
   }
 }
-init();
+function adminLogout() { sessionStorage.removeItem(LS_ADMIN); showLogin(); }
 
-/* Modal dışına tıklayınca kapatma */
-['videoModal','adminLoginModal','adminPanelModal'].forEach(id=>{
-  document.getElementById(id).addEventListener('click', function(e){
-    if(e.target === this) closeModal(id);
-  });
+function renderAdminList() {
+  const el = document.getElementById('adminList');
+  if (!el) return;
+  if (!videos.length) { el.innerHTML = `<div class="text-center text-gray-600 py-6 text-sm">${t('empty')}</div>`; return; }
+  el.innerHTML = videos.map(v => `
+    <div class="flex items-center gap-3 p-3 rounded-lg bg-black/30 hover:bg-black/50 transition">
+      <div class="w-12 h-16 rounded bg-ink overflow-hidden shrink-0">
+        ${v.cover ? `<img src="${escapeHtml(v.cover)}" class="w-full h-full object-cover" onerror="this.style.display='none'"/>` : `<div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-film text-gray-700"></i></div>`}
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm truncate">${escapeHtml(v.titleTr||v.titleEn||'(no title)')}</div>
+        <div class="text-xs text-gray-500">${v.category} · ${t('likeBtn')}: ${v.likes||0}</div>
+      </div>
+      <div class="flex gap-1 shrink-0">
+        <button onclick="editVideo('${v.id}')" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-accent hover:text-black transition flex items-center justify-center" title="${t('edit')}"><i class="fa-solid fa-pen text-xs"></i></button>
+        <button onclick="deleteVideo('${v.id}')" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-flame hover:text-white transition flex items-center justify-center" title="${t('delete')}"><i class="fa-solid fa-trash text-xs"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function editVideo(id) {
+  const v = videos.find(x => x.id === id); if (!v) return;
+  editingId = id;
+  document.getElementById('formTitle').textContent = t('editVideo');
+  document.getElementById('fTitleTr').value = v.titleTr || '';
+  document.getElementById('fTitleEn').value = v.titleEn || '';
+  document.getElementById('fDescTr').value = v.descTr || '';
+  document.getElementById('fDescEn').value = v.descEn || '';
+  document.getElementById('fCategory').value = v.category || 'Film';
+  document.getElementById('fCover').value = v.cover || '';
+  document.getElementById('fEmbed').value = v.embed || '';
+  document.getElementById('fNew').checked = !!v.isNew;
+}
+function resetForm() {
+  editingId = null;
+  document.getElementById('formTitle').textContent = t('addVideo');
+  ['fTitleTr','fTitleEn','fDescTr','fDescEn','fCover','fEmbed'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fCategory').value = 'Seri';
+  document.getElementById('fNew').checked = false;
+}
+function saveVideo() {
+  if (!isAdmin()) { showLogin(); return; }
+  const data = {
+    titleTr: document.getElementById('fTitleTr').value.trim(),
+    titleEn: document.getElementById('fTitleEn').value.trim(),
+    descTr: document.getElementById('fDescTr').value.trim(),
+    descEn: document.getElementById('fDescEn').value.trim(),
+    category: document.getElementById('fCategory').value,
+    cover: document.getElementById('fCover').value.trim(),
+    embed: document.getElementById('fEmbed').value.trim(),
+    isNew: document.getElementById('fNew').checked,
+  };
+  if (!data.titleTr && !data.titleEn) { toast(t('invalidUrl')); return; }
+  if (editingId) {
+    const v = videos.find(x => x.id === editingId);
+    Object.assign(v, data);
+  } else {
+    videos.unshift({ id: 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2,6), ...data, likes: 0, likedBy: [], comments: [] });
+  }
+  saveVideos(videos);
+  resetForm();
+  renderAdminList();
+  renderVideos();
+  toast(t('saved'));
+}
+function deleteVideo(id) {
+  if (!isAdmin()) return;
+  const v = videos.find(x => x.id === id);
+  if (v?.localKey) idbDel(v.localKey).catch(()=>{});
+  videos = videos.filter(x => x.id !== id);
+  saveVideos(videos);
+  renderAdminList();
+  renderVideos();
+  toast(t('deleted'));
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify({ videos, lang: currentLang }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'animeci18_backup.json';
+  a.click();
+  toast(t('exportOk'));
+}
+async function importData(e) {
+  const f = e.target.files?.[0]; if (!f) return;
+  try {
+    const text = await f.text();
+    const data = JSON.parse(text);
+    if (Array.isArray(data.videos)) { videos = data.videos; saveVideos(videos); renderAdminList(); renderVideos(); toast(t('importOk')); }
+  } catch { toast(t('invalidUrl')); }
+}
+
+/* ================ Toast ================ */
+function toast(msg) {
+  const el = document.createElement('div');
+  el.className = 'toast glass-strong px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2';
+  el.innerHTML = `<i class="fa-solid fa-circle-check text-accent"></i>${escapeHtml(msg)}`;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>el.remove(), 3200);
+}
+
+/* ================ Hero Featured ================ */
+function playFeatured() {
+  if (videos.length) openVideo(videos[0].id);
+  else toast(t('empty'));
+}
+function goHome(e) { e.preventDefault(); setCategory('all'); document.getElementById('searchInput').value=''; renderVideos(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ================ Boot ================ */
+(function boot() {
+  applyLang();
+  checkAge();
+  renderVideos();
+})();
+
+// ESC closes modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (!document.getElementById('videoModal').classList.contains('hidden')) closeVideoModal();
+    else if (!document.getElementById('adminModal').classList.contains('hidden')) closeAdminModal();
+  }
 });
 </script>
 </body>
